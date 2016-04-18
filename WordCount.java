@@ -2,41 +2,30 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import java.util.Scanner;
-import java.util.ArrayList;
+
+
+import java.util.HashMap;
+import java.util.Set;
 
 public class WordCount{
-  private ArrayList<String> strings;
-  private ArrayList<Frequency> frequency;
+  private HashMap<String, Integer> frequency;
 
   File fileName;
 
   public WordCount(File file){
-   strings = new ArrayList<>();
-   frequency = new ArrayList<>();
+   
+   frequency = new HashMap<>();
    fileName = file;
-
+   
    try {
     Scanner scan = new Scanner(file);
 
-    while(scan.hasNextLine()){
-     String line = scan.nextLine();
-     String[] stringArr = line.split(" ");
-
-     for(String s : stringArr){
-      if(s.isEmpty()){
-       continue;
-      }
-      if(strings.contains(s)){
-       for(Frequency f: frequency){
-        if(f.getString().equals(s)){
-         f.incrementCount();
-        }
-       }
-      } else {
-       strings.add(s);
-
-       frequency.add(new Frequency(s));
-      }
+    while(scan.hasNext()){
+     String word = scan.next();
+     if(frequency.containsKey(word)){
+        frequency.replace(word, frequency.get(word) + 1);
+     } else{
+       frequency.put(word, 1);
      }
     }
    } catch (FileNotFoundException e){
@@ -45,9 +34,11 @@ public class WordCount{
   }
   
   public String getFrequencies(){
-   String result = "";
-        for (Frequency f : frequency) {
-            result += f.getString() + ": " + f.count() + "\n";
+    String result ="";
+    Set<String> keyset = frequency.keySet();
+        for (String key : keyset) {
+            int count = frequency.get(key);
+            result +=key +": "+count+"\n";
         }
         return result;
     }
