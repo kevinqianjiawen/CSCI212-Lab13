@@ -13,19 +13,25 @@ public class Driver extends JPanel {
   
   private JFileChooser fc;
   private JTextArea log;
+  private JScrollPane logScrollPane;
+  
   
   public Driver(){
     change = new JButton("change background color");
     text = new JButton("Select File");
-
-    change.addActionListener(new changeListener());
+    
+    
+    
     setLayout(new BorderLayout());
     setPreferredSize(new Dimension(Width, Height));
+    
+
     add(change, BorderLayout.PAGE_END);
     
                      
     background = new RandomColor();
-    setBackground(background.getColor());
+    //setBackground(background.getColor());
+
     
     fc = new JFileChooser();
     text.addActionListener(new textListener());
@@ -34,13 +40,23 @@ public class Driver extends JPanel {
     log = new JTextArea(5,20);
     log.setMargin(new Insets(5,5,5,5));
     log.setEditable(false);
-    JScrollPane logScrollPane = new JScrollPane(log);
+    log.setOpaque(true);
+    log.setBackground(Color.blue);
+    logScrollPane = new JScrollPane(log);
+    //JViewport viewport = new JViewport();
+    //viewport.setOpaque(false);
+    //logScrollPane.setViewport(viewport);
+    //logScrollPane.getViewport().setBackground(background.getColor());
     add(logScrollPane, BorderLayout.CENTER);
+    
+    change.addActionListener(new changeListener());
+    
     
   }
   private class changeListener implements ActionListener{
     public void actionPerformed(ActionEvent e){
-      setBackground(background.getColor());
+      //logScrollPane.getViewport().setBackground(background.getColor());
+      log.setBackground(background.getColor());
     }
   }
 
