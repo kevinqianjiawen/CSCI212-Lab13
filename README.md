@@ -1,5 +1,5 @@
 # CSCI212-Lab13
-•The goal of this lab: 
+•The goal of this lab: \n
 a.use a HashMap in a simple program 
 b.override methods at object creation 
 c.use a JFileChooser 
@@ -7,7 +7,7 @@ c.use a JFileChooser
 •The other button changes the background of the frame to a random color
 •For the two buttons in the application, each button has its own ActionListener and the actionPerformed method for each button should be overridden when the ActionListener is added.  
 •Here is an example of how to do this for each of the buttons: 
-JButton button = new JButton("File Selector");
+        JButton button = new JButton("File Selector");
         //Add action listener to button
         button.addActionListener(new ActionListener() {
  
