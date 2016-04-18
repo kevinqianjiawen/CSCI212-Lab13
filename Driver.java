@@ -1,6 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.*;
 
 public class Driver extends JPanel {
   private int Width = 600;
@@ -9,6 +10,9 @@ public class Driver extends JPanel {
   
   private JButton change;
   private JButton text;
+  
+  private JFileChooser fc;
+  private JTextArea log;
   
   public Driver(){
     change = new JButton("change background color");
@@ -22,9 +26,17 @@ public class Driver extends JPanel {
                      
     background = new RandomColor();
     setBackground(background.getColor());
-
+    
+    fc = new JFileChooser();
     text.addActionListener(new textListener());
     add(text, BorderLayout.PAGE_START);
+    
+    log = new JTextArea(5,20);
+    log.setMargin(new Insets(5,5,5,5));
+    log.setEditable(false);
+    JScrollPane logScrollPane = new JScrollPane(log);
+    add(logScrollPane, BorderLayout.CENTER);
+    
   }
   private class changeListener implements ActionListener{
     public void actionPerformed(ActionEvent e){
@@ -34,7 +46,15 @@ public class Driver extends JPanel {
 
   private class textListener implements ActionListener{
     public void actionPerformed(ActionEvent e){
-
+      int retValue = fc.showOpenDialog(null);
+      
+      if (retValue == 0){
+      File file = fc.getSelectedFile();
+      //This is where a real application would open the file.
+      WordCount w = new WordCount(file);
+            
+      log.append(w.getFrequencies());
+      }
     }
   }
   public static void main(String[] args){
